@@ -1,15 +1,13 @@
 #Required packages
 library(rvest)
 library(tidyverse)
-library(jsonlite)
+library(tidytext)
 library(dplyr)
 library(stringr)
 library(tidytext)
 library(ggplot2)
 library(wordcloud)
-library(topicmodels)
-library(tm)
-library(reshape2)
+
 
 #Function to Scrape a Single URL
 scrape_website <- function(url) {
@@ -95,8 +93,7 @@ scrape_website <- function(url) {
       url = url,
       title = title,
       publication_date = pub_date,
-      content = all_text,
-      stringsAsFactors = FALSE
+      content = all_text
     ))
   }, error = function(e) {
     message(paste("Error scraping", url, ":", e$message))
@@ -104,8 +101,7 @@ scrape_website <- function(url) {
       url = url,
       title = NA_character_,
       publication_date = NA_character_,
-      content = NA_character_,
-      stringsAsFactors = FALSE
+      content = NA_character_
     ))
   })
 }
@@ -243,7 +239,7 @@ print("Scraping and data export complete!")
 #---Qualitative analyses---
 
 # Load Data
-data <- read.csv("ai_workplace_perceptions.csv", stringsAsFactors = FALSE)
+data <- read.csv("ai_workplace_perceptions.csv")
 
 # Data Cleaning
 data_clean <- data %>%
